@@ -7,7 +7,8 @@
     "author": "BangHyeonJun <bhj2849@naver.com>",
     "license": "MIT",
     "dependencies": {
-        "graphql-yoga": "^1.17.4"
+        "graphql-yoga": "^1.17.4",
+        "mongoose": "^5.5.11"
     },
     "scripts": {
         "start": "nodemon --exec babel-node index.js"
