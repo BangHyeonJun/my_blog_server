@@ -5,5 +5,8 @@
   "main": "index.js",
   "repository": "https://github.com/BangHyeonJun/my_blog_server.git",
   "author": "BangHyeonJun <bhj2849@naver.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "graphql-yoga": "^1.17.4"
+  }
 }
