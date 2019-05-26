@@ -1,15 +1,20 @@
-type Movie {
-    id: Int!
+type Comment {
+    publish_date: String!
+    name: String!
+    content: String
+}
 
+type Post {
     title: String!
-
-    rating: Float
+    publish_date: String!
+    content: String!
+    comment: [Comment]
 }
 
 type Query {
-    movie(title: String!): Movie
+    post: [Post]
 }
 
 type Mutation {
-    addMovie(title: String!, rating: Float): Boolean!
+    insertPost(title: String!, content: String!): Boolean!
 }
