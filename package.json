@@ -1,12 +1,20 @@
 {
-  "name": "my_blog_server",
-  "version": "1.0.0",
-  "description": "개인 블로그 서버",
-  "main": "index.js",
-  "repository": "https://github.com/BangHyeonJun/my_blog_server.git",
-  "author": "BangHyeonJun <bhj2849@naver.com>",
-  "license": "MIT",
-  "dependencies": {
-    "graphql-yoga": "^1.17.4"
-  }
+    "name": "my_blog_server",
+    "version": "1.0.0",
+    "description": "개인 블로그 서버",
+    "main": "index.js",
+    "repository": "https://github.com/BangHyeonJun/my_blog_server.git",
+    "author": "BangHyeonJun <bhj2849@naver.com>",
+    "license": "MIT",
+    "dependencies": {
+        "graphql-yoga": "^1.17.4"
+    },
+    "scripts": {
+        "start": "nodemon --exec babel-node index.js"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-stage-3": "^6.24.1"
+    }
 }
