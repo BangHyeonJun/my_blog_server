@@ -10,10 +10,16 @@ const resolvers = {
     },
 
     Mutation: {
-        insertPost: async (_, { title, content }) => {
+        insertPost: async (_, { category, title, content }) => {
             moment.tz.setDefault("Asia/Seoul");
             let now = moment().format("YYYY-MM-DD HH:mm:ss");
             let post = new Post({
+                mainImg: {
+                    path: "/statics/img/no_image.png",
+                    width: 300,
+                    height: 300
+                },
+                category,
                 title,
                 publish_date: now,
                 content,

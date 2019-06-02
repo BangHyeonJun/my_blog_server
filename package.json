@@ -7,6 +7,7 @@
     "author": "BangHyeonJun <bhj2849@naver.com>",
     "license": "MIT",
     "dependencies": {
+        "express": "^4.17.1",
         "graphql-yoga": "^1.17.4",
         "moment": "^2.24.0",
         "moment-timezone": "^0.5.25",
