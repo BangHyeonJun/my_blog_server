@@ -4,10 +4,9 @@ import resolvers from "./graphql/resolvers";
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect(
-    "mongodb://localhost:27017/myBlog", // mLab URL 삽입 dbuser: 아이디, dbpassword: 비밀번호
-    { useNewUrlParser: true }
-);
+mongoose.connect("mongodb://admin:bhj2849@ds044907.mlab.com:44907/blog", {
+    useNewUrlParser: true
+});
 mongoose.connection.once("open", () => {
     console.log("MongoDB Connected...");
 });
