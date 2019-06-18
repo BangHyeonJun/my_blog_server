@@ -6,9 +6,6 @@ const resolvers = {
     Query: {
         post: () => {
             return Post.find({}); // 데이터베이스에서 특정 하나의 데이터 조회
-        },
-        getPhoto: (url) => {
-            
         }
     },
 
