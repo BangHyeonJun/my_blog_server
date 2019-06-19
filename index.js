@@ -5,7 +5,7 @@ import resolvers from "./graphql/resolvers";
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect("mongodb://admin:bhj2849@ds044907.mlab.com:44907/blog", {
+mongoose.connect("mongodb://admin:admin123@ds044907.mlab.com:44907/blog", {
     useNewUrlParser: true
 });
 mongoose.connection.once("open", () => {

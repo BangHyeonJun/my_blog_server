@@ -15,7 +15,7 @@ const resolvers = {
             let now = moment().format("YYYY-MM-DD HH:mm:ss");
             let post = new Post({
                 mainImg: {
-                    path: "/statics/img/no_image.png",
+                    path: "",
                     width: 300,
                     height: 300
                 },

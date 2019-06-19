@@ -5,8 +5,7 @@ const Schema = mongoose.Schema;
 const imageSchema = new mongoose.Schema({
     path: {
         type: String,
-        required: true,
-        default: "/statics/img/no_image.png"
+        default: ""
     },
     width: { type: Number, required: true, default: 300 },
     height: { type: Number, required: true, default: 300 }
