@@ -19,10 +19,16 @@ type Post {
     comments: [Comment]
 }
 
+type Test {
+    text: String
+}
+
 type Query {
     post: [Post]
+    test: [Test]
 }
 
 type Mutation {
     insertPost(category: String!, title: String!, content: String!): Boolean!
+    insertTest(text: String): Boolean!
 }
