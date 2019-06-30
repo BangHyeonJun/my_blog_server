@@ -11,6 +11,7 @@ type Img {
 }
 
 type Post {
+    _id: String!
     mainImg: Img
     category: String!
     title: String!
@@ -29,6 +30,6 @@ type Query {
 }
 
 type Mutation {
-    insertPost(category: String!, title: String!, content: String!): Boolean!
+    insertPost(title: String!, content: String!): Boolean!
     insertTest(text: String): Boolean!
 }

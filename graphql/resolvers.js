@@ -6,6 +6,7 @@ import "moment-timezone";
 const resolvers = {
     Query: {
         post: () => {
+            console.log(Post.find({}))
             return Post.find({}); // 데이터베이스에서 특정 하나의 데이터 조회
         },
 
@@ -15,7 +16,7 @@ const resolvers = {
     },
 
     Mutation: {
-        insertPost: async (_, { category, title, content }) => {
+        insertPost: async (_, { title, content }) => {
             moment.tz.setDefault("Asia/Seoul");
             let now = moment().format("YYYY-MM-DD HH:mm:ss");
             let post = new Post({
@@ -24,7 +25,7 @@ const resolvers = {
                     width: 300,
                     height: 300
                 },
-                category,
+                category: "test",
                 title,
                 publish_date: now,
                 content,
