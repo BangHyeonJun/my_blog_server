@@ -26,6 +26,7 @@ type Test {
 
 type Query {
     post: [Post]
+    getPost(id: String!): Post
     test: [Test]
 }
 

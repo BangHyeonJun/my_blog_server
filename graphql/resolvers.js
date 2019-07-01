@@ -6,8 +6,11 @@ import "moment-timezone";
 const resolvers = {
     Query: {
         post: () => {
-            console.log(Post.find({}))
             return Post.find({}); // 데이터베이스에서 특정 하나의 데이터 조회
+        },
+
+        getPost: (_, { id }) => {
+            return Post.findById(id);
         },
 
         test: () => {
