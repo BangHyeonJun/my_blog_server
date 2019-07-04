@@ -1,0 +1,28 @@
+type Comment {
+    publish_date: String!
+    name: String!
+    content: String
+}
+
+type Img {
+    path: String!
+}
+
+type Post {
+    _id: String!
+    mainImg: Img
+    category: String!
+    title: String!
+    publish_date: String!
+    content: String!
+    comments: [Comment]
+}
+
+type Query {
+    post: [Post]
+    getPost: Post
+}
+
+type Mutation {
+    insertPost(title: String!, content: String!): Boolean!
+}

@@ -1,28 +1,6 @@
-scalar Upload
-
-type Comment {
-    publish_date: String!
-    name: String!
-    content: String
-}
-
-type Img {
-    path: String!
-}
-
 type Sns {
     url: String!
     path: String!
-}
-
-type Post {
-    _id: String!
-    mainImg: Img
-    category: String!
-    title: String!
-    publish_date: String!
-    content: String!
-    comments: [Comment]
 }
 
 type Member {
@@ -36,19 +14,11 @@ type Member {
     sns: [Sns]
 }
 
-type Test {
-    text: String
-}
-
 type Query {
-    post: [Post]
     member: [Member]
-    getPost(id: String!): Post
-    test: [Test]
 }
 
 type Mutation {
-    insertPost(title: String!, content: String!): Boolean!
     insertMember(
         avatar: createImg
         userid: String!
@@ -57,8 +27,6 @@ type Mutation {
         introduce: String
         sns: [createSNS]
     ): Boolean!
-    uploadFile(file: Upload!): Boolean
-    insertTest(text: String): Boolean!
 }
 
 input createImg {

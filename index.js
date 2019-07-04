@@ -1,7 +1,9 @@
 import { GraphQLServer } from "graphql-yoga";
-const express = require("express");
+import express from "express";
+import typeDefs from "./graphql/typeDefs";
 import mongoose from "mongoose";
-import resolvers from "./graphql/resolvers";
+
+const PORT = process.env.PORT || 4000;
 
 mongoose.Promise = global.Promise;
 
@@ -12,12 +14,9 @@ mongoose.connection.once("open", () => {
     console.log("MongoDB Connected...");
 });
 
-const server = new GraphQLServer({
-    typeDefs: "graphql/schema.graphql",
-    resolvers
-});
+const server = new GraphQLServer({ schema: typeDefs });
 
 // 정적 이미지를 사용하기 위해서 적어놓음
-server.express.use("/statics", express.static("statics"));
+server.express.use("./statics", express.static("statics"));
 
-server.start(() => console.log("http://localhost:4000"));
+server.start({ port: PORT }, () => console.log(`http://localhost:${PORT}`));
