@@ -20,7 +20,7 @@ type Post {
 
 type Query {
     post: [Post]
-    getPost: Post
+    getPost(id: String!): Post
 }
 
 type Mutation {

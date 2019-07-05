@@ -1,39 +1,40 @@
-type Sns {
+type SNS {
     url: String!
-    path: String!
+    type: Int!
 }
 
 type Member {
     _id: String!
-    avatar: Img
-    username: String!
-    join_date: String!
+    email: String!
+    password: String!
     userid: String!
-    email: String
+    nickname: String!
+    join_date: String!
+    avatar: String
     introduce: String
-    sns: [Sns]
+    sns: [SNS]
 }
 
 type Query {
-    member: [Member]
+    getMember(id: String!): Member
+    checkMember(email: String!, password: String!): Member
 }
 
-type Mutation {
-    insertMember(
-        avatar: createImg
-        userid: String!
-        username: String!
-        email: String
-        introduce: String
-        sns: [createSNS]
-    ): Boolean!
-}
+# type Mutation {
+#     insertMember(
+#         avatar: createImg
+#         userid: String!
+#         email: String
+#         introduce: String
+#         sns: [createSNS]
+#     ): Boolean!
+# }
 
-input createImg {
-    path: String!
-}
+# input createImg {
+#     path: String!
+# }
 
-input createSNS {
-    url: String!
-    path: String!
-}
+# input createSNS {
+#     url: String!
+#     path: String!
+# }
