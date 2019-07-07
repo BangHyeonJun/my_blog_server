@@ -1,4 +1,6 @@
 import Member from "./memberSchema";
+import bcrypt from "bcrypt";
+import jsonwebtoken from "jsonwebtoken";
 
 export default {
     Query: {
@@ -7,8 +9,32 @@ export default {
             return await Member.findById(id);
         },
 
-        checkMember: async (_, { email, password }) => {
-            return await Member.findOne({ email, password });
+        // 참고
+        // https://blog.pusher.com/handling-authentication-in-graphql-jwt/
+        me: async (_, args, { member }) => {
+            if (!member) {
+                throw new Error("인증을 하지 않았습니다.");
+            }
+
+            return await Member.findById(member.id);
+        }
+    },
+
+    Mutation: {
+        login: async (_, { email, password }) => {
+            const member = await Member.findOne({ email, password });
+
+            if (!member) {
+                throw new Error("이메일과 비밀번호가 올바르지 않습니다.");
+            }
+
+            // const valid = await bcrypt.compare(password, user.password)
+
+            return jsonwebtoken.sign(
+                { id: member._id, email: member.email },
+                "somereallylongsecretkey",
+                { expiresIn: "1min" }
+            );
         }
     }
 

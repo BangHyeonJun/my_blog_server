@@ -20,3 +20,6 @@ const server = new GraphQLServer({ schema: typeDefs });
 server.express.use("./statics", express.static("statics"));
 
 server.start({ port: PORT }, () => console.log(`http://localhost:${PORT}`));
+
+// AUTH : https://www.prisma.io/tutorials/graphql-rest-authentication-authorization-basics-ct20
+// 참고
