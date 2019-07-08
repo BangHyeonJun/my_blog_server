@@ -16,12 +16,19 @@ type Member {
 }
 
 type Query {
-    getMember(id: String!): Member
+    getMember(id: String!): String
+    test(token: String!): String
+    isLogin: Boolean!
 }
 
 type Mutation {
-    checkMember(email: String!, password: String!): Member
+    login(username: String!, pwd: String!): String!
+    signup(username: String!, pwd: String!): Boolean!
 }
+#getMember(id: String!): Member
+# type Mutation {
+#     # checkMember(email: String!, password: String!): Member
+# }
 
 # type Mutation {
 #     insertMember(
