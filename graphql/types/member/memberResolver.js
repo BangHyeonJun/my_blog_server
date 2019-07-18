@@ -14,10 +14,11 @@ export default {
 
         test: async (_, { token }) => {
             const test = await decodeJWT(token);
-            return test;
+            return "t";
         },
 
         isLogin: (parent, args, context) => {
+            console.log(context.user);
             return context.user.email;
             typeof req.session.user !== "undefined";
         }

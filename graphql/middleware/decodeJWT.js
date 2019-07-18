@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const expiresIn = "1m"; // time to live
+const expiresIn = "1h"; // time to live
 const secret = "samplejwtauthgraphql"; // secret key
 const tokenPrefix = "JWT"; // Prefix for HTTP header
 
