@@ -1,9 +1,5 @@
 import jwt from "jsonwebtoken";
 
-const expiresIn = "1h"; // time to live
-const secret = "samplejwtauthgraphql"; // secret key
-const tokenPrefix = "JWT"; // Prefix for HTTP header
-
 const decodeJWT = async token => {
     try {
         // if (!payload) {
@@ -16,16 +12,20 @@ const decodeJWT = async token => {
         //     throw new Error("Invalid header format");
         // }
 
-        const decode = jwt.verify(token, secret, (err, data) => {
-            if (err) {
-                console.log("if !!!");
-                //token is invalid
-                throw new Error("Invalid token!");
-            } else {
-                console.log("else !!!");
-                return { email: data.email, password: data.password };
+        const decode = jwt.verify(
+            token,
+            process.env.token_sort,
+            (err, data) => {
+                if (err) {
+                    console.log("if !!!");
+                    //token is invalid
+                    throw new Error("Invalid token!");
+                } else {
+                    console.log("else !!!");
+                    return { email: data.email, password: data.password };
+                }
             }
-        });
+        );
         return decode;
     } catch (error) {
         console.log("error !!!");

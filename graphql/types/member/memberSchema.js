@@ -10,19 +10,25 @@ const Schema = mongoose.Schema;
 // });
 
 const sns = new Schema({
-    url: { type: String, required: true },
-    type: { type: Number, required: true }
+    url: { type: String, required: false },
+    code: { type: Number, required: true },
+    image: { type: String, required: true }
+});
+
+const rule = new Schema({
+    name: { type: String, required: true },
+    code: { type: Number, required: true }
 });
 
 const memberSchema = new Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
-    userid: { type: String, required: true },
     nickname: { type: String, required: true },
     join_date: { type: Date, required: true },
     avatar: { type: String, required: false },
     introduce: { type: String, required: false },
-    sns: [sns]
+    sns: [sns],
+    rule: [rule]
 });
 
 export default mongoose.model("Member", memberSchema);

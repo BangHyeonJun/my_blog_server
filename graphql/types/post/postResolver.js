@@ -9,7 +9,6 @@ export default {
         },
 
         getPost: (_, { id }) => {
-            console.log(id);
             return Post.findById(id);
         }
     },

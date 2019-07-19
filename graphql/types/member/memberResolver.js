@@ -1,8 +1,12 @@
 import Member from "./memberSchema";
+import moment from "moment";
+import "moment-timezone";
 import bcrypt from "bcrypt";
-import jsonwebtoken from "jsonwebtoken";
+import randomstring from "randomstring";
 import createJWT from "../../middleware/createJWT";
 import decodeJWT from "../../middleware/decodeJWT";
+import RULE from "./rule";
+import SNS from "./sns";
 
 const data = {};
 
@@ -14,7 +18,7 @@ export default {
 
         test: async (_, { token }) => {
             const test = await decodeJWT(token);
-            return "t";
+            return "at";
         },
 
         isLogin: (parent, args, context) => {
@@ -25,17 +29,78 @@ export default {
     },
 
     Mutation: {
-        signup: async (parent, { username, pwd }, ctx) => {
-            if (data[username]) {
-                throw new Error("Another User with same username exists.");
+        // 회원가입
+        signup: async (_, { email }, ctx) => {
+            // 입력된 email이 존재하는지 확인
+            let user = await Member.find({ email: email }).count();
+
+            // 유저 체크
+            if (user) {
+                throw new Error("해당 이메일을 가진 유저가 존재합니다.");
             }
 
-            data[username] = {
-                pwd: await bcrypt.hashSync(pwd, 10)
-            };
+            // 기본값으로 초기화
+            const uEmail = email;
+            const uPassword = "nuguna-" + randomstring.generate(10);
+            const uNickname = "누구나-" + randomstring.generate(6);
+            moment.tz.setDefault("Asia/Seoul");
+            const uJoinDate = moment().format("YYYY-MM-DD HH:mm:ss");
 
-            return true;
+            // 멤버 객체 생성
+            const newbey = new Member({
+                email: uEmail,
+                password: await bcrypt.hashSync(uPassword, 10),
+                nickname: uNickname,
+                join_date: uJoinDate,
+                rule: RULE["member"]
+            });
+
+            if (await newbey.save()) {
+                return {
+                    email: uEmail,
+                    password: uPassword
+                };
+            } else {
+                throw new Error("회원을 정상적으로 저장하지 못하였습니다.");
+            }
         },
+
+        // 정보 수정
+        setUserInfo: async (_, { id, avatar, nickname, introduce, sns }) => {
+            let param = new Object();
+
+            if (!id) {
+                throw new Error("아이디는 필수 값 입니다.");
+            }
+
+            const userSNS = new Array();
+            for (let i in sns) {
+                let target = SNS[sns[i]["name"]];
+                let url = sns[i]["url"];
+                let form = {
+                    code: target["code"],
+                    image: target["image"],
+                    url: url
+                };
+                userSNS.push(form);
+            }
+            param["sns"] = userSNS;
+            param["introduce"] = introduce;
+            param["nickname"] = nickname;
+            param["avatar"] = avatar;
+
+            await Member.updateOne(
+                { _id: id },
+                { $set: param },
+                (err, collection) => {
+                    if (err) throw new Error(err);
+                    console.log("Record updated successfully");
+                }
+            );
+
+            return await Member.findById(id);
+        },
+
         login: async (parent, { username, pwd }, { req }) => {
             const user = data[username];
             if (user) {

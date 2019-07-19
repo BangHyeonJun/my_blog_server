@@ -1,30 +1,49 @@
 type SNS {
     url: String!
-    type: Int!
+    code: Int!
+    image: String!
+}
+
+type RULE {
+    name: String!
+    code: Int!
 }
 
 type Member {
     _id: String!
     email: String!
     password: String!
-    userid: String!
-    nickname: String!
-    join_date: String!
     avatar: String
+    nickname: String!
     introduce: String
     sns: [SNS]
+    join_date: String!
+    rule: [RULE]
 }
 
 type Query {
-    getMember(id: String!): String
+    getMember(id: String!): Member
     test(token: String!): String
     isLogin: Boolean!
 }
 
 type Mutation {
-    login(username: String!, pwd: String!): String!
-    signup(username: String!, pwd: String!): Boolean!
+    signup(email: String!): Member!
+    setUserInfo(
+        id: String!
+        avatar: String
+        nickname: String
+        introduce: String
+        sns: [createSNS]
+    ): Member!
+    login(email: String!, pwd: String!): String!
 }
+
+input createSNS {
+    name: String!
+    url: String!
+}
+
 #getMember(id: String!): Member
 # type Mutation {
 #     # checkMember(email: String!, password: String!): Member

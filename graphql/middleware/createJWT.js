@@ -1,9 +1,5 @@
 import jwt from "jsonwebtoken";
 
-const expiresIn = "1h"; // time to live
-const secret = "samplejwtauthgraphql"; // secret key
-const tokenPrefix = "JWT"; // Prefix for HTTP header
-
 const createJWT = (email, password) => {
     if (!email || !password) {
         // no credentials = fail
@@ -14,9 +10,11 @@ const createJWT = (email, password) => {
         email: email,
         password: password
     };
-    const token = jwt.sign(payload, secret, {
-        expiresIn
+
+    const token = jwt.sign(payload, process.env.token_sort, {
+        expiresIn: process.env.token_expire
     });
+
     return token;
 };
 
