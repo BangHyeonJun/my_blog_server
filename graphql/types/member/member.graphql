@@ -36,7 +36,8 @@ type Mutation {
         introduce: String
         sns: [createSNS]
     ): Member!
-    login(email: String!, pwd: String!): String!
+    setPassword(id: String!, password: String!): Boolean!
+    login(email: String!, password: String!): String!
 }
 
 input createSNS {

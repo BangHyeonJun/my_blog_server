@@ -73,6 +73,10 @@ export default {
                 throw new Error("아이디는 필수 값 입니다.");
             }
 
+            if ((await Member.findById(id).count()) < 1) {
+                throw new Error("해당 아이디는 존재하지 않습니다.");
+            }
+
             const userSNS = new Array();
             for (let i in sns) {
                 let target = SNS[sns[i]["name"]];
@@ -101,11 +105,44 @@ export default {
             return await Member.findById(id);
         },
 
-        login: async (parent, { username, pwd }, { req }) => {
-            const user = data[username];
+        // 패스워드 설정
+        setPassword: async (_, { id, password }) => {
+            if (!id) {
+                throw new Error("아이디는 필수 값 입니다.");
+            }
+
+            if ((await Member.findById(id).count()) < 1) {
+                throw new Error("해당 아이디는 존재하지 않습니다.");
+            }
+
+            await Member.updateOne(
+                { _id: id },
+                { $set: { password: await bcrypt.hashSync(password, 10) } },
+                (err, collection) => {
+                    if (err) throw new Error(err);
+                    console.log("Record updated successfully");
+                }
+            );
+
+            return true;
+        },
+
+        // 로그인 기능
+        login: async (_, { email, password }) => {
+            if (!email || !password) {
+                throw new Error("이메일 또는 패스워드는 필수 값 입니다.");
+            }
+
+            const user = await Member.findOne({ email: email });
+
+            if (!user) {
+                throw new Error("해당 아이디는 존재하지 않습니다.");
+            }
+
             if (user) {
-                if (await bcrypt.compareSync(pwd, user.pwd)) {
-                    return createJWT(username, pwd);
+                if (await bcrypt.compareSync(password, user.password)) {
+                    console.log("test???");
+                    return createJWT(email, password);
                 }
 
                 throw new Error("Incorrect password.");
