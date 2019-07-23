@@ -22,9 +22,7 @@ export default {
         },
 
         isLogin: (parent, args, context) => {
-            console.log(context.user);
-            return context.user.email;
-            typeof req.session.user !== "undefined";
+            return context.req.user;
         }
     },
 
@@ -141,14 +139,19 @@ export default {
 
             if (user) {
                 if (await bcrypt.compareSync(password, user.password)) {
-                    console.log("test???");
-                    return createJWT(email, password);
+                    const uId = user._id;
+                    const uEmail = user.email;
+                    const uAvatar = user.avatar;
+                    const uNickname = user.nickname;
+                    const uRule = user.rule;
+
+                    return createJWT(uId, uEmail, uAvatar, uNickname, uRule);
                 }
 
-                throw new Error("Incorrect password.");
+                throw new Error("패스워드가 일치하지 않습니다.");
             }
 
-            throw new Error("No Such User exists.");
+            throw new Error("유저를 찾을수 없습니다.");
         }
     }
 };

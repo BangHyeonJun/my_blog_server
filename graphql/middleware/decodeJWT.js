@@ -17,12 +17,16 @@ const decodeJWT = async token => {
             process.env.token_sort,
             (err, data) => {
                 if (err) {
-                    console.log("if !!!");
                     //token is invalid
                     throw new Error("Invalid token!");
                 } else {
-                    console.log("else !!!");
-                    return { email: data.email, password: data.password };
+                    return {
+                        _id: data._id,
+                        email: data.email,
+                        avartar: data.avartar,
+                        nickname: data.nickname,
+                        rule: data.rule
+                    };
                 }
             }
         );

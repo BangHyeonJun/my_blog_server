@@ -24,7 +24,7 @@ type Member {
 type Query {
     getMember(id: String!): Member
     test(token: String!): String
-    isLogin: Boolean!
+    isLogin: Member!
 }
 
 type Mutation {

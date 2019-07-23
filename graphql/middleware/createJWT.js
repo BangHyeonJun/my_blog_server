@@ -1,14 +1,12 @@
 import jwt from "jsonwebtoken";
 
-const createJWT = (email, password) => {
-    if (!email || !password) {
-        // no credentials = fail
-        return false;
-    }
-
+const createJWT = (_id, email, avatar, nickname, rule) => {
     const payload = {
+        _id: _id,
         email: email,
-        password: password
+        avatar: avatar,
+        nickname: nickname,
+        rule: rule
     };
 
     const token = jwt.sign(payload, process.env.token_sort, {

@@ -5,7 +5,6 @@ const auth = async (req, res, next) => {
 
     if (token) {
         const user = await decodeJWT(token);
-        console.log("test : ", user);
         req.user = user;
     }
 
