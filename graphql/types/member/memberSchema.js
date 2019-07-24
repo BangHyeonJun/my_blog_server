@@ -15,11 +15,6 @@ const sns = new Schema({
     image: { type: String, required: true }
 });
 
-const rule = new Schema({
-    name: { type: String, required: true },
-    code: { type: Number, required: true }
-});
-
 const memberSchema = new Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
@@ -28,7 +23,7 @@ const memberSchema = new Schema({
     avatar: { type: String, required: false },
     introduce: { type: String, required: false },
     sns: [sns],
-    rule: [rule]
+    role: { type: String, required: false }
 });
 
 export default mongoose.model("Member", memberSchema);

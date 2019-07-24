@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import express from "express";
 import session from "express-session";
 import auth from "./graphql/middleware/auth";
+import permission from "./graphql/middleware/permission";
 import dotenv from "dotenv";
 import ms from "ms";
 
@@ -33,17 +34,24 @@ const opts = {
 // context
 const context = req => {
     return {
-        req: req.request
+        ...req,
+        req: {
+            user: auth(req.request)
+        }
     };
 };
 
-const server = new GraphQLServer({ schema: typeDefs, context: context });
+const server = new GraphQLServer({
+    schema: typeDefs,
+    middlewares: [permission],
+    context: context
+});
 
 // 정적 이미지를 사용하기 위해서 적어놓음
 server.express.use("./blog/statics", express.static("statics"));
 
 // 인증을 위한 부분
-server.express.use(auth);
+// server.express.use(auth);
 
 server.start(opts, () => console.log(`http://localhost:${PORT}`));
 

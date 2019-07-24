@@ -4,21 +4,16 @@ import "moment-timezone";
 import bcrypt from "bcrypt";
 import randomstring from "randomstring";
 import createJWT from "../../middleware/createJWT";
-import decodeJWT from "../../middleware/decodeJWT";
-import RULE from "./rule";
 import SNS from "./sns";
-
-const data = {};
 
 export default {
     Query: {
-        getMember: async (_, { id }) => {
-            return await Member.findById(id);
+        getMembers: async (_, args) => {
+            
         },
 
-        test: async (_, { token }) => {
-            const test = await decodeJWT(token);
-            return "at";
+        getMember: async (_, { id }) => {
+            return await Member.findById(id);
         },
 
         isLogin: (parent, args, context) => {
@@ -50,7 +45,7 @@ export default {
                 password: await bcrypt.hashSync(uPassword, 10),
                 nickname: uNickname,
                 join_date: uJoinDate,
-                rule: RULE["member"]
+                role: "member"
             });
 
             if (await newbey.save()) {
@@ -140,12 +135,9 @@ export default {
             if (user) {
                 if (await bcrypt.compareSync(password, user.password)) {
                     const uId = user._id;
-                    const uEmail = user.email;
-                    const uAvatar = user.avatar;
-                    const uNickname = user.nickname;
-                    const uRule = user.rule;
+                    const uRole = user.role;
 
-                    return createJWT(uId, uEmail, uAvatar, uNickname, uRule);
+                    return createJWT(uId, uRole);
                 }
 
                 throw new Error("패스워드가 일치하지 않습니다.");

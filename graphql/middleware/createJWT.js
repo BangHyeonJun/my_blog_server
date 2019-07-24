@@ -1,12 +1,9 @@
 import jwt from "jsonwebtoken";
 
-const createJWT = (_id, email, avatar, nickname, rule) => {
+const createJWT = (_id, role) => {
     const payload = {
         _id: _id,
-        email: email,
-        avatar: avatar,
-        nickname: nickname,
-        rule: rule
+        role: role
     };
 
     const token = jwt.sign(payload, process.env.token_sort, {

@@ -12,7 +12,7 @@ const decodeJWT = async token => {
         //     throw new Error("Invalid header format");
         // }
 
-        const decode = jwt.verify(
+        const decode = await jwt.verify(
             token,
             process.env.token_sort,
             (err, data) => {
@@ -22,10 +22,7 @@ const decodeJWT = async token => {
                 } else {
                     return {
                         _id: data._id,
-                        email: data.email,
-                        avartar: data.avartar,
-                        nickname: data.nickname,
-                        rule: data.rule
+                        role: data.role
                     };
                 }
             }
