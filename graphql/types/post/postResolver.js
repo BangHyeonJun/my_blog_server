@@ -4,8 +4,12 @@ import "moment-timezone";
 
 export default {
     Query: {
-        post: () => {
-            return Post.find({}); // 데이터베이스에서 특정 하나의 데이터 조회
+        getPosts: async () => {
+            return await Post.find({});
+        },
+
+        post: async () => {
+            return await Post.find({}); // 데이터베이스에서 특정 하나의 데이터 조회
         },
 
         getPost: (_, { id }) => {
@@ -14,7 +18,7 @@ export default {
     },
 
     Mutation: {
-        insertPost: async (_, { title, content }) => {
+        insertPost: async (_, { title, writer, mainImg, content }) => {
             moment.tz.setDefault("Asia/Seoul");
             let now = moment().format("YYYY-MM-DD HH:mm:ss");
             let post = new Post({

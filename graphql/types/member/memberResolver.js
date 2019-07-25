@@ -9,15 +9,25 @@ import SNS from "./sns";
 export default {
     Query: {
         getMembers: async (_, args) => {
-            
+            return await Member.find({});
         },
 
         getMember: async (_, { id }) => {
             return await Member.findById(id);
         },
 
-        isLogin: (parent, args, context) => {
-            return context.req.user;
+        getLoginMember: async (parent, args, context) => {
+            const TokenUser = await context.req.user;
+
+            if (TokenUser) {
+                const member = await Member.findById(TokenUser._id);
+
+                return member;
+            } else {
+                throw new Error(
+                    "세션이 만료되었거나, 비정상적인 접근을 하였습니다."
+                );
+            }
         }
     },
 

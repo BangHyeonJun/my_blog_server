@@ -17,9 +17,10 @@ type Member {
 }
 
 type Query {
+    getMembers: [Member]
     getMember(id: String!): Member
     test(token: String!): String
-    isLogin: Member!
+    getLoginMember: Member!
 }
 
 type Mutation {

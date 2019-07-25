@@ -4,8 +4,12 @@ import { isAdmin, isManager, isMember, isAuthenticated } from "./role";
 const permission = shield({
     Query: {
         /* member */
-        isLogin: isAdmin,
-        getMember: or(isMember, isManager, isAdmin)
+        getLoginMember: isAdmin,
+        getMember: or(isMember, isManager, isAdmin),
+        getMembers: or(isAdmin),
+
+        /* post */
+        getPosts: or(isAuthenticated, isAdmin)
     },
     Mutation: {
         /* member */

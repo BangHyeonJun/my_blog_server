@@ -1,10 +1,15 @@
 import decodeJWT from "./decodeJWT";
 
 const auth = async req => {
-    const token = req.get(process.env.token_prefix).replace(/^Bearer /, "");
+    let token = null;
+
+    if (req.get(process.env.token_prefix)) {
+        token = req.get(process.env.token_prefix).replace(/^Bearer /, "");
+    }
 
     if (token) {
         const user = await decodeJWT(token);
+        console.log(user);
         return user;
     } else {
         return null;
