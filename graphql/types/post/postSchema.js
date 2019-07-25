@@ -10,11 +10,13 @@ const imageSchema = new mongoose.Schema({
 });
 
 const postSchema = new Schema({
-    mainImg: imageSchema,
+    writer: { type: String, required: true },
+    mainImg: { type: String, required: true },
+    hashtag: [{ type: String, required: false }],
     title: { type: String, required: true },
-    category: { type: String, required: true },
     publish_date: { type: Date, required: true },
     content: { type: String, required: false },
+    html: { type: String, required: false },
     comments: [
         new Schema({
             publish_date: { type: Date, required: true },

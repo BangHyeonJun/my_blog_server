@@ -9,7 +9,8 @@ const permission = shield({
         getMembers: or(isAdmin),
 
         /* post */
-        getPosts: or(isAuthenticated, isAdmin)
+        getPosts: or(isAuthenticated, isAdmin),
+        getPost: or(isAdmin, isManager, isMember)
     },
     Mutation: {
         /* member */

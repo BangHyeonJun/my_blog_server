@@ -12,16 +12,16 @@ type Post {
     _id: String!
     writer: String!
     mainImg: String!
-    category: String!
+    hashtag: [String]!
     title: String!
     publish_date: String!
     content: String!
+    html: String!
     comments: [Comment]
 }
 
 type Query {
     getPosts: [Post]
-    post: [Post]
     getPost(id: String!): Post
 }
 

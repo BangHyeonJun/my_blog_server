@@ -8,30 +8,28 @@ export default {
             return await Post.find({});
         },
 
-        post: async () => {
-            return await Post.find({}); // 데이터베이스에서 특정 하나의 데이터 조회
-        },
-
-        getPost: (_, { id }) => {
-            return Post.findById(id);
+        getPost: async (_, { id }) => {
+            console.log(await Post.findById(id));
+            return await Post.findById(id);
         }
     },
 
     Mutation: {
-        insertPost: async (_, { title, writer, mainImg, content }) => {
+        insertPost: async (
+            _,
+            { userID, mainImg, hashtag, title, content, html }
+        ) => {
             moment.tz.setDefault("Asia/Seoul");
             let now = moment().format("YYYY-MM-DD HH:mm:ss");
             let post = new Post({
-                mainImg: {
-                    path: "",
-                    width: 300,
-                    height: 300
-                },
-                category: "test",
-                title,
+                writer: userID,
+                mainImg: mainImg,
+                hashtag: hashtag,
+                title: title,
                 publish_date: now,
-                content,
-                comment: []
+                content: content,
+                html: html,
+                comment: new Array()
             });
 
             if (await post.save()) {
