@@ -15,7 +15,7 @@ type Post {
     hashtag: [String]!
     title: String!
     publish_date: String!
-    content: String!
+    text: String!
     html: String!
     comments: [Comment]
 }
@@ -26,5 +26,11 @@ type Query {
 }
 
 type Mutation {
-    insertPost(title: String!, content: String!): Boolean!
+    insertPost(
+        userID: String!
+        hashtag: String!
+        title: String!
+        text: String!
+        html: String!
+    ): Boolean!
 }

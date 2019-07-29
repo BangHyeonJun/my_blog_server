@@ -15,19 +15,18 @@ export default {
     },
 
     Mutation: {
-        insertPost: async (
-            _,
-            { userID, mainImg, hashtag, title, content, html }
-        ) => {
+        insertPost: async (_, { userID, hashtag, title, text, html }) => {
+            // TODO : 메인 이미지 작업 진행해야함
+
             moment.tz.setDefault("Asia/Seoul");
             let now = moment().format("YYYY-MM-DD HH:mm:ss");
             let post = new Post({
                 writer: userID,
-                mainImg: mainImg,
+                mainImg: "test",
                 hashtag: hashtag,
                 title: title,
                 publish_date: now,
-                content: content,
+                text: text,
                 html: html,
                 comment: new Array()
             });

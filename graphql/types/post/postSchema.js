@@ -15,7 +15,7 @@ const postSchema = new Schema({
     hashtag: [{ type: String, required: false }],
     title: { type: String, required: true },
     publish_date: { type: Date, required: true },
-    content: { type: String, required: false },
+    text: { type: String, required: false },
     html: { type: String, required: false },
     comments: [
         new Schema({
