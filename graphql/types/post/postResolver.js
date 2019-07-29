@@ -36,6 +36,17 @@ export default {
             } else {
                 return false;
             }
+        },
+
+        UploadMainImg: async (obj, { file }) => {
+            const { filename, mimetype, encoding } = await file;
+            console.log("file : ", await file);
+            console.log("filename : ", filename);
+            console.log("minetype : ", mimetype);
+            console.log("encoding : ", encoding);
+
+            const returnFile = { filename, mimetype, encoding };
+            return returnFile;
         }
     }
 };
