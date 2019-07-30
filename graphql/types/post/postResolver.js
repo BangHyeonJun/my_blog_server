@@ -2,6 +2,9 @@ import Post from "./postSchema";
 import moment from "moment";
 import "moment-timezone";
 
+import fs from "fs";
+import Jimp from "jimp/es";
+
 export default {
     Query: {
         getPosts: async () => {
@@ -39,11 +42,23 @@ export default {
         },
 
         UploadMainImg: async (obj, { file }) => {
-            const { filename, mimetype, encoding } = await file;
-            console.log("file : ", await file);
-            console.log("filename : ", filename);
-            console.log("minetype : ", mimetype);
-            console.log("encoding : ", encoding);
+            const mainImg = await file;
+            const { filename, mimetype, encoding } = mainImg;
+
+            fs.writeFile(filename, mainImg, "binary", function(err) {
+                if (err) throw err;
+                console.log("File saved.");
+            });
+            Jimp.read(filename, function(err, lenna) {
+                console.log(lenna);
+
+                if (err) throw err;
+                lenna
+                    .resize(256, 256) // resize
+                    .quality(60) // set JPEG quality
+                    .greyscale() // set greyscale
+                    .write("lena-small-bw.jpg"); // save
+            });
 
             const returnFile = { filename, mimetype, encoding };
             return returnFile;
