@@ -3,7 +3,7 @@ import moment from "moment";
 import "moment-timezone";
 
 import fs from "fs";
-import Jimp from "jimp/es";
+import Jimp from "jimp";
 
 export default {
     Query: {
@@ -43,22 +43,27 @@ export default {
 
         UploadMainImg: async (obj, { file }) => {
             const mainImg = await file;
-            const { filename, mimetype, encoding } = mainImg;
+            const { filename, mimetype, encoding, createReadStream } = mainImg;
 
-            fs.writeFile(filename, mainImg, "binary", function(err) {
-                if (err) throw err;
-                console.log("File saved.");
-            });
-            Jimp.read(filename, function(err, lenna) {
-                console.log(lenna);
+            let test = createReadStream(filename);
+            console.log(test);
 
-                if (err) throw err;
-                lenna
-                    .resize(256, 256) // resize
-                    .quality(60) // set JPEG quality
-                    .greyscale() // set greyscale
-                    .write("lena-small-bw.jpg"); // save
-            });
+            // fs.writeFile(filename, mainImg, "binary", function(err) {
+            //     if (err) throw err;
+            //     console.log("File saved.");
+            //     console.log(filename);
+
+            //     Jimp.read(filename, function(err, image) {
+            //         console.log(image);
+
+            //         if (err) throw err;
+            //         image
+            //             .resize(256, 256) // resize
+            //             .quality(60) // set JPEG quality
+            //             .greyscale() // set greyscale
+            //             .write("lena-small-bw.jpg"); // save
+            //     });
+            // });
 
             const returnFile = { filename, mimetype, encoding };
             return returnFile;
