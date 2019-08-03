@@ -3,7 +3,7 @@ import moment from "moment";
 import "moment-timezone";
 
 import fs from "fs";
-import Jimp from "jimp";
+import Sharp from "sharp";
 
 export default {
     Query: {
@@ -35,18 +35,31 @@ export default {
             });
 
             if (await post.save()) {
-                return true;
+                return post;
             } else {
-                return false;
+                throw new Error("포스트가 정상적으로 저장되지 않았습니다.");
             }
         },
 
-        UploadMainImg: async (obj, { file }) => {
+        UploadMainImg: async (obj, { postID, file }) => {
             const mainImg = await file;
             const { filename, mimetype, encoding, createReadStream } = mainImg;
 
-            let test = createReadStream(filename);
-            console.log(test);
+            const readStream = createReadStream(filename, {
+                encoding: encoding
+            });
+
+            // const roundedCornerResizer = Sharp()
+            //     .resize(400, 1080)
+            //     .png();
+
+            readStream
+                // .pipe(roundedCornerResizer)
+                .pipe(fs.createWriteStream(filename));
+
+            // readStream.on("data", function(e) {
+            //     fs.write(e);
+            // });
 
             // fs.writeFile(filename, mainImg, "binary", function(err) {
             //     if (err) throw err;
@@ -64,6 +77,19 @@ export default {
             //             .write("lena-small-bw.jpg"); // save
             //     });
             // });
+
+            await Post.updateOne(
+                { _id: postID },
+                {
+                    $set: {
+                        mainImg: filename
+                    }
+                },
+                (err, collection) => {
+                    if (err) throw new Error(err);
+                    console.log("Record updated successfully");
+                }
+            );
 
             const returnFile = { filename, mimetype, encoding };
             return returnFile;

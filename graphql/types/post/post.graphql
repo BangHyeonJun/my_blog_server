@@ -32,6 +32,6 @@ type Mutation {
         title: String!
         text: String!
         html: String!
-    ): Boolean!
-    UploadMainImg(file: Upload!): File!
+    ): Post!
+    UploadMainImg(postID: String, file: Upload!): File!
 }
