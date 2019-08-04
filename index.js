@@ -48,7 +48,7 @@ const server = new GraphQLServer({
 });
 
 // 정적 이미지를 사용하기 위해서 적어놓음
-server.express.use("./blog/statics", express.static("statics"));
+server.express.use("/blog", express.static("statics"));
 
 // 인증을 위한 부분
 // server.express.use(auth);

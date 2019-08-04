@@ -5,7 +5,7 @@ const permission = shield({
     Query: {
         /* member */
         getLoginMember: isAdmin,
-        getMember: or(isMember, isManager, isAdmin),
+        getMember: or(isMember, isManager, isAdmin, isAuthenticated),
         getMembers: or(isAdmin),
 
         /* post */
